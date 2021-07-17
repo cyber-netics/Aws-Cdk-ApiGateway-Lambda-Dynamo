@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "build": "tsc",
+    "bundle": "npm install && wait-on npm run bundle:triggers & npm run bundle:layers",
+    "bundle:triggers": "ts-node ./script/bundle --target triggers",
+    "bundle:layers": "ts-node ./script/bundle --target layers --wrap"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.943.0",
+    "fs-extra": "^10.0.0",
+    "wait-on": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.11",
+    "ts-node": "^10.0.0",
+    "typescript": "~3.9.7",
+    "@types/uuid": "^8.3.1",
+    "@types/redis": "^2.8.31"
+  }
+}

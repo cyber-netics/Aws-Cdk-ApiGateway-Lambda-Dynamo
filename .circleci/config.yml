@@ -1,0 +1,38 @@
+version: 2.1
+
+jobs:
+  Infrastructure:
+    docker:
+      - image: cimg/node:15.8.0
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - cdk-modules-{{ checksum "src/package.json" }}-1
+
+      - run:
+          name: Install
+          command: |
+            npm install --prefix ./src
+
+      - run:
+          name: Build
+          command: |
+            npm run build --prefix ./src
+
+      - run:
+          name: Test
+          command: |
+            npm run test --prefix ./src
+
+      - save_cache:
+          key: cdk-modules-{{ checksum "src/package.json" }}-1
+          paths:
+            - src/node_modules
+
+workflows:
+  pipeline:
+    jobs:
+      - Infrastructure:
